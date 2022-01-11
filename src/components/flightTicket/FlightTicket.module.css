@@ -1,0 +1,43 @@
+.direction {
+  border-bottom: 1px solid #e9e9e9;
+  font-size: 20px;
+  padding: 8px;
+}
+
+.airport,
+.date,
+.arrow {
+  color: #0087c9;
+}
+
+.timeBlock {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.time {
+  font-size: 24px;
+}
+
+.duration {
+  font-size: 20px;
+}
+
+.transfers {
+  text-align: center;
+  color: #ffb168;
+  border-bottom: 1px solid #b4b4b4;
+  line-height: 0.1em;
+  margin: 10px 40px;
+}
+
+.transfers span {
+  background-color: white;
+  padding: 0 10px;
+}
+
+.flightDescription {
+  padding: 8px;
+  font-size: 16px;
+}

@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #0087c9;
+  color: white;
+  padding: 4px;
+}
+
+.priceBlock {
+  text-align: right;
+}
+
+.price {
+  font-size: 24px;
+}
+
+.priceDescription {
+  font-size: 12px;
+}
