@@ -6,6 +6,17 @@
   padding: 4px;
 }
 
+.carrier {
+  display: flex;
+  align-items: center;
+}
+
+.carrier span {
+  font-size: 20px;
+  font-weight: 500;
+  margin-left: 16px;
+}
+
 .priceBlock {
   text-align: right;
 }

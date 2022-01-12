@@ -1,12 +1,14 @@
 import styles from './FlightItemHeader.module.css';
 
-export const FlightItemHeader = () => {
+export const FlightItemHeader = ({ price, carrier }) => {
   return (
     <div className={styles.header}>
-      <img className={styles.carrierLogo} alt={'Carrier Logo'} />
+      <div className={styles.carrier}>
+        <span>{carrier}</span>
+      </div>
       <div className={styles.priceBlock}>
         <div className={styles.price}>
-          {'20000 ₽'}
+          {`${price} ₽`}
         </div>
         <div className={styles.priceDescription}>
           {'Стоимость для одного взрослого человека'}
