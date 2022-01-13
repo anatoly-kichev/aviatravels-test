@@ -1,12 +1,18 @@
 import styles from './App.module.css';
 
 import { Sidebar, FlightsList } from '..';
+import { APIContextProvider } from '../../apiContext';
+import { FiltersContextProvider } from '../../filtersContext';
 
 export const App = () => {
   return (
-    <div className={styles.app}>
-      <Sidebar />
-      <FlightsList />
-    </div>
+    <APIContextProvider>
+      <div className={styles.app}>
+        <FiltersContextProvider>
+          <Sidebar />
+          <FlightsList />
+        </FiltersContextProvider>
+      </div>
+    </APIContextProvider>
   );
 }

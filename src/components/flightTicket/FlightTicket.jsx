@@ -49,13 +49,13 @@ export const FlightTicket = ({
             `}
           </span>
           <span className={styles.time}>
-            {` ${arrivalDate.getHours()}:${arrivalDate.getMinutes()}`}
+            {` ${arrivalDate.toLocaleString('ru-Ru', { hour: '2-digit', minute: '2-digit'})}`}
           </span>
         </div>
       </div>
 
       <div className={styles.transfers}>
-        {transfersCount !== 0 && <span>{transfersCount}</span>}
+        {transfersCount !== 0 && <span>{`${transfersCount} пересадка`}</span>}
       </div>
 
       <div className={styles.flightDescription}>
