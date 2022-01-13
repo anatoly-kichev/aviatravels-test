@@ -6,6 +6,10 @@
 
     git clone https://github.com/anatoly-kichev/aviatravels-test.git
 
+### Change direcorty
+
+    cd aviatravels-test/
+
 ### Install necessary dependencies
 
     npm i
