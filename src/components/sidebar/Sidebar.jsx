@@ -1,7 +1,8 @@
-import { useAPI } from '../../apiContext';
-import { useFiltersContext } from '../../filtersContext';
+import { useAPI } from '../../context/apiContext';
+import { useFiltersContext } from '../../context/filtersContext';
 import cn from 'classnames';
 import styles from './Sidebar.module.css';
+import { useState } from 'react';
 
 export const Sidebar = () => {
   const { airlines } = useAPI();
@@ -33,9 +34,21 @@ export const Sidebar = () => {
     }
   });
 
+  const [inputPrice, setInputPrice] = useState({
+    from: filterPrice.from,
+    to: filterPrice.to
+  });
+
+  const handleChangeInputPrice = (event, type) => {
+    setInputPrice({
+      from: type === 'from' ? event.target.value: inputPrice.from,
+      to: type === 'to' ? event.target.value: inputPrice.to
+    })
+  };
+
   const handleChangeSorting = (event) => {
     setFilterSort(event.target.value);
-  }
+  };
 
   const handleChangeFilterTransfers = (event) => {
     const { value, checked } = event.target;
@@ -44,15 +57,22 @@ export const Sidebar = () => {
       zero: value === 'zero' ? checked : filterTransfers.zero,
       one: value === 'one' ? checked : filterTransfers.one
     })
-  }
+  };
 
-  const handleChangeFilterPrice = (event, type) => {
+  const handleKeyPressFilterPrice = (event, type) => {
     if (event.key === 'Enter') {
       setFilterPrice({
         from: type === 'from' ? parseInt(event.target.value) : filterPrice.from,
         to: type === 'to' ? parseInt(event.target.value) : filterPrice.to
       })
     }
+  };
+
+  const handleBlurFilterPrice = () => {
+    setFilterPrice({
+        from: parseInt(inputPrice.from),
+        to: parseInt(inputPrice.to)
+      })
   }
   
   const handleChangeFilterAirlines = (event, uid) => {
@@ -61,7 +81,7 @@ export const Sidebar = () => {
     } else {
       setActiveFilterAirlines(activeFilterAirlines.filter(airlineUid => airlineUid !== uid))
     }
-  }
+  };
 
   return (
     <div className={styles.sidebar}>
@@ -114,16 +134,20 @@ export const Sidebar = () => {
               {'От '}
               <input
                 type="number"
-                onKeyPress={(event) => handleChangeFilterPrice(event, 'from')}
-                placeholder={filterPrice.from}
+                onKeyPress={(event) => handleKeyPressFilterPrice(event, 'from')}
+                onChange={(event) => handleChangeInputPrice(event, 'from')}
+                onBlur={handleBlurFilterPrice}
+                value={inputPrice.from}
               />
             </label>
             <label>
               {'До '}
               <input
                 type="number"
-                onKeyPress={(event) => handleChangeFilterPrice(event, 'to')}
-                placeholder={filterPrice.to}
+                onKeyPress={(event) => handleKeyPressFilterPrice(event, 'to')}
+                onChange={(event) => handleChangeInputPrice(event, 'to')}
+                onBlur={handleBlurFilterPrice}
+                value={inputPrice.to}
               />
             </label>
           </div>

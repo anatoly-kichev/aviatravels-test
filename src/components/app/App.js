@@ -1,8 +1,8 @@
 import styles from './App.module.css';
 
 import { Sidebar, FlightsList } from '..';
-import { APIContextProvider } from '../../apiContext';
-import { FiltersContextProvider } from '../../filtersContext';
+import { APIContextProvider } from '../../context/apiContext';
+import { FiltersContextProvider } from '../../context/filtersContext';
 
 export const App = () => {
   return (

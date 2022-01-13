@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { FlightItem } from '..';
-import { useAPI } from '../../apiContext';
-import { useFiltersContext } from '../../filtersContext';
+import { useAPI } from '../../context/apiContext';
+import { useFiltersContext } from '../../context/filtersContext';
 import styles from './FlightsList.module.css';
 
 export const FlightsList = () => {
+  const [pageSize, setPageSize] = useState(3);
   const { flights } = useAPI();
   const {
     filterSort,
@@ -27,7 +29,7 @@ export const FlightsList = () => {
       default:
         return flights;
     }
-  }
+  };
 
   const filteredTransfersFlights = (flights) => {
     const { zero, one } = filterTransfers;
@@ -44,13 +46,13 @@ export const FlightsList = () => {
     } else {
       return flights;
     }
-  }
+  };
 
   const filteredPriceFlights = (flights) => {
     return flights.filter(flight =>
       flight.flight.price.total.amount >= filterPrice.from &&
       flight.flight.price.total.amount <= filterPrice.to)
-  }
+  };
 
   const filteredAirlinesFlights = (flights) => {
     if (activeFilterAirlines.length > 0) {
@@ -64,24 +66,41 @@ export const FlightsList = () => {
       })
     }
     return flights;
-  }
+  };
+
+  const handleClickExtraButton = () => {
+    setPageSize(pageSize + 6);
+  };
 
   const filteredFlights = sortedFlights(filteredTransfersFlights(filteredPriceFlights(filteredAirlinesFlights(flights))));
+  const isShowExtraButton = pageSize !== 0 && !(filteredFlights.length <= pageSize);
 
   return(
     <div className={styles.flightsList}>
       {
-        filteredFlights
-        &&
-        filteredFlights.map(flight => (
-          <FlightItem
-            key={flight.flightToken}
-            flight={flight.flight}
-          />
-        ))
+        filteredFlights.length === 0
+        ? <div className={styles.placeholder}>
+            {flights.length === 0 ? 'Данные загружаются...' : 'Перелетов с такими фильтрами не найдено'}
+          </div>
+        : filteredFlights
+          .slice(0, Math.min(pageSize, filteredFlights.length))
+          .map(flight => (
+            <FlightItem
+              key={flight.flightToken}
+              flight={flight.flight}
+            />
+          ))
       }
 
-      <button className={styles.extraButton}>{'Показать еще'}</button>
+      {
+        isShowExtraButton &&
+        <button
+          className={styles.extraButton}
+          onClick={handleClickExtraButton}
+        >
+          {'Показать еще'}
+        </button>
+      }
     </div>
   )
 };
