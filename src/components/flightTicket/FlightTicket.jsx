@@ -35,9 +35,13 @@ export const FlightTicket = ({
         </div>
 
         <div className={styles.timeBlockItem}>
-          <span className={styles.durationIcon}></span>
+          <img
+            className={styles.timeIcon}
+            src={`${process.env.PUBLIC_URL}/timeIcon.svg`}
+            alt="time icon"
+          />
           <span className={styles.duration}>
-            {`${Math.floor(duration / 60)} ч ${duration % 60} мин`}
+            {` ${Math.floor(duration / 60)} ч ${duration % 60} мин`}
           </span>
         </div>
 

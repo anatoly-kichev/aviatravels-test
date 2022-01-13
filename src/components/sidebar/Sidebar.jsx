@@ -1,5 +1,6 @@
 import { useAPI } from '../../apiContext';
 import { useFiltersContext } from '../../filtersContext';
+import cn from 'classnames';
 import styles from './Sidebar.module.css';
 
 export const Sidebar = () => {
@@ -64,53 +65,87 @@ export const Sidebar = () => {
 
   return (
     <div className={styles.sidebar}>
-      <div className={styles.filterSorting}>
-        <h3 className={styles.filterTitle}>Сортировать</h3>
-        <div onChange={handleChangeSorting}>
-          <input type="radio" value="ASCENDING" name="sort" />{'-по возрастанию цены'}
-          <input type="radio" value="DESCENDING" name="sort" />{'-по убыванию цены'}
-          <input type="radio" value="TIME_TRAVEL" name="sort" />{'-по времени в пути'}
+        <div>
+          <h3 className={styles.filterTitle}>Сортировать</h3>
+          <div className={styles.inputFields} onChange={handleChangeSorting}>
+            <label>
+              <input type="radio" value="ASCENDING" name="sort" />
+              {' - по возрастанию цены'}
+            </label>
+            <label>
+              <input type="radio" value="DESCENDING" name="sort" />
+              {' - по убыванию цены'}
+            </label>
+            <label>
+              <input type="radio" value="TIME_TRAVEL" name="sort" />
+              {' - по времени в пути'}
+            </label>
+          </div>
         </div>
-      </div>
 
-      <div className={styles.filterTransfers}>
-        <h3 className={styles.filterTitle}>Фильтровать</h3>
-        <input
-          type="checkbox"
-          value={'one'}
-          name="transfer"
-          onChange={handleChangeFilterTransfers}
-        />
-        {'- 1 пересадка'}
-        <input
-          type="checkbox"
-          value={'zero'}
-          name="transfer"
-          onChange={handleChangeFilterTransfers}
-        />
-        {'- без пересадок'}
-      </div>
+        <div>
+          <h3 className={styles.filterTitle}>Фильтровать</h3>
+          <div className={styles.inputFields}>
+            <label>
+              <input
+                type="checkbox"
+                value={'one'}
+                name="transfer"
+                onChange={handleChangeFilterTransfers}
+              />
+              {' - 1 пересадка'}
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value={'zero'}
+                name="transfer"
+                onChange={handleChangeFilterTransfers}
+              />
+              {' - без пересадок'}
+            </label>
+          </div>
+        </div>
 
-      <div className={styles.filterPrice}>
-        <h3 className={styles.filterTitle}>Цена</h3>
-        <input onKeyPress={(event) => handleChangeFilterPrice(event, 'from')} />
-        <input onKeyPress={(event) => handleChangeFilterPrice(event, 'to')} />
-      </div>
+        <div>
+          <h3 className={styles.filterTitle}>Цена</h3>
+          <div className={styles.inputFields}>
+            <label>
+              {'От '}
+              <input
+                type="number"
+                onKeyPress={(event) => handleChangeFilterPrice(event, 'from')}
+                placeholder={filterPrice.from}
+              />
+            </label>
+            <label>
+              {'До '}
+              <input
+                type="number"
+                onKeyPress={(event) => handleChangeFilterPrice(event, 'to')}
+                placeholder={filterPrice.to}
+              />
+            </label>
+          </div>
+        </div>
 
-      <div className={styles.filterAirlines}>
-        <h3 className={styles.filterTitle}>Авиакомпании</h3>
-        
-        {filterAirlines.map(airline => (
-          <label key={airline.uid}>
-            <input
-              type="checkbox"
-              value={airline.caption}
-              onChange={(event) => handleChangeFilterAirlines(event, airline.uid)}
-            />
-            {airline.caption}
-          </label>
-        ))}
-      </div>
+        <div>
+          <h3 className={styles.filterTitle}>Авиакомпании</h3>
+          <div className={cn(styles.inputFields, styles.airlinesInputs)}>
+            {filterAirlines.map(airline => (
+              <label key={airline.uid}>
+                <input
+                  type="checkbox"
+                  value={airline.caption}
+                  onChange={(event) => handleChangeFilterAirlines(event, airline.uid)}
+                />
+                {' - '}
+                <span>{airline.caption}</span>
+                {` от ${airline.price} р.`}
+              </label>
+            ))}
+          </div>
+        </div>
     </div>
   )
 };
